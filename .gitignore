@@ -7,3 +7,6 @@
 # Python 가상환경
 venv/
 __pycache__/
+"korquad_t5_model/" 
+"t5_finetuned/" 
+"t5_finetuned_model/" 
