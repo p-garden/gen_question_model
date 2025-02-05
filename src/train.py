@@ -13,25 +13,6 @@
 #     name: gen_que_env
 # ---
 
-# +
-from dataset import get_datasets
-from model import load_model
-from transformers import TrainingArguments, Trainer
-
-# 모델 및 데이터 로드
-tokenizer, model = load_model()
-train_dataset, valid_dataset = get_datasets()  #  `dataset.py`에서 변환된 데이터 가져오기
-
-TRAIN_SAMPLE_SIZE = 800  # 학습 데이터 샘플 개수
-VALID_SAMPLE_SIZE = 200  # 검증 데이터 샘플 개수
-
-train_dataset = train_dataset.shuffle(seed=42).select(range(min(len(train_dataset), TRAIN_SAMPLE_SIZE)))
-valid_dataset = valid_dataset.shuffle(seed=42).select(range(min(len(valid_dataset), VALID_SAMPLE_SIZE)))
-
-print(f"✅ 학습 데이터 개수: {len(train_dataset)}개")
-print(f"✅ 검증 데이터 개수: {len(valid_dataset)}개")
-
-# 데이터 전처리
 def preprocess_function(examples):
     model_inputs = tokenizer(
         examples["input_text"], 
@@ -50,6 +31,26 @@ def preprocess_function(examples):
     model_inputs["labels"] = labels["input_ids"]
     return model_inputs
 
+
+# +
+from dataset import get_datasets
+from model import load_model
+from transformers import TrainingArguments, Trainer
+
+# 모델 및 데이터 로드
+tokenizer, model = load_model()
+train_dataset, valid_dataset = get_datasets()  #  `dataset.py`에서 변환된 데이터 가져오기
+
+TRAIN_SAMPLE_SIZE = 800  # 학습 데이터 샘플 개수
+VALID_SAMPLE_SIZE = 200  # 검증 데이터 샘플 개수
+
+train_dataset = train_dataset.shuffle(seed=42).select(range(min(len(train_dataset), TRAIN_SAMPLE_SIZE)))
+valid_dataset = valid_dataset.shuffle(seed=42).select(range(min(len(valid_dataset), VALID_SAMPLE_SIZE)))
+
+print(f"✅ 학습 데이터 개수: {len(train_dataset)}개")
+print(f"✅ 검증 데이터 개수: {len(valid_dataset)}개")
+
+# 데이터 전처리 preprocess 함수 사용
 train_tokenized = train_dataset.map(preprocess_function, batched=True)
 valid_tokenized = valid_dataset.map(preprocess_function, batched=True)
 
@@ -107,7 +108,7 @@ train_dataset, valid_dataset = get_datasets()  # 새로운 데이터셋 로드
 
 # ✅ 추가 학습 시 데이터 일부만 사용 (샘플링)
 TRAIN_SAMPLE_SIZE = 1000  # 학습 데이터 샘플 개수
-VALID_SAMPLE_SIZE = 300  # 검증 데이터 샘플 개수
+VALID_SAMPLE_SIZE = 200  # 검증 데이터 샘플 개수
 
 train_dataset = train_dataset.shuffle(seed=42).select(range(min(len(train_dataset), TRAIN_SAMPLE_SIZE)))
 valid_dataset = valid_dataset.shuffle(seed=42).select(range(min(len(valid_dataset), VALID_SAMPLE_SIZE)))
@@ -120,17 +121,17 @@ valid_tokenized = valid_dataset.map(preprocess_function, batched=True)
 
 # ✅ 추가 학습을 위한 TrainingArguments 설정
 training_args = TrainingArguments(
-    output_dir="../saved_model/kobart_qg_finetuned_v2",  # 새로운 모델 저장 경로
+    output_dir="../saved_model/kobart_qg_finetuned",  # 새로운 모델 저장 경로
     evaluation_strategy="steps",  # 매 steps마다 평가
     save_strategy="steps",          # 모델 저장도 steps마다 실|행
     learning_rate=3e-5,
     per_device_train_batch_size=8,
     per_device_eval_batch_size=8,
     num_train_epochs=3,  # 추가 학습 3 Epoch
-    save_steps=500,  # 500 스텝마다 모델 저장
+    save_steps=300,  # 300 스텝마다 모델 저장
     save_total_limit=2,  # 최신 모델 2개만 저장
     logging_dir="../logs",
-    logging_steps=500,  # 500 스텝마다 로그 출력
+    logging_steps=100,  # 100 스텝마다 로그 출력
     load_best_model_at_end=True,  # 가장 좋은 모델 불러오기
     metric_for_best_model="eval_loss",
     resume_from_checkpoint=True,  # ✅ 기존 체크포인트에서 이어서 학습
@@ -151,7 +152,9 @@ if __name__ == "__main__":
     trainer.train()
     
     # 학습된 모델 저장
-    model.save_pretrained("../saved_model/kobart_qg_finetuned")
+    model.save_pretrained("../saved_model/kobart_qg_finetuned", torch_dtype=torch.float16, safe_serialization=False)
     tokenizer.save_pretrained("../saved_model/kobart_qg_finetuned")
     print("✅ 추가 학습 완료 및 저장됨!")
+
+# -
 
