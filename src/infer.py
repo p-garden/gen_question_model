@@ -15,6 +15,9 @@ drive.mount('/content/drive')
 
 !pip freeze > ../requirements.txt
 
+# Commented out IPython magic to ensure Python compatibility.
+# %cd /content/drive/MyDrive/BITAMIN/gen_question/src
+
 import torch
 from transformers import PreTrainedTokenizerFast, BartForConditionalGeneration
 
