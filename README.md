@@ -16,7 +16,6 @@
 	✅ O/X 문제 생성: 핵심 키워드 기반 생성
 
 🏗 시스템 아키텍처 (System Architecture)
-```
     subgraph Layout_Analysis
         YOLO--일반 텍스트--> Text[EasyOCR]
         YOLO--표--> Table[성능 개선 시도 중]
