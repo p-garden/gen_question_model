@@ -16,36 +16,35 @@
 	✅ O/X 문제 생성: 핵심 키워드 기반 생성
 
 ### 🏗 시스템 아키텍처 (System Architecture)
+mermaid  
 graph TD
-    📂Input(학습자료.pdf)--레이아웃 및 텍스트 추출--> 🖼YOLO[DocLayout-YOLO]
+    Input(학습자료.pdf)--레이아웃 및 텍스트 추출--> YOLO[DocLayout-YOLO]
     
     subgraph Layout_Analysis
-        YOLO--📄일반 텍스트--> 📝Text[EasyOCR]
-        YOLO--📊표--> 📋Table[성능 개선 시도 중]
-        YOLO--📉차트--> 📈Chart[kor_deplot]
-        Text --> 📂result1(result1.json)
-		    Table --> 📂result1
-		    Chart --> 📂result1
+        YOLO--일반 텍스트--> Text[EasyOCR]
+        YOLO--표--> Table[성능 개선 시도 중]
+        YOLO--차트--> Chart[kor_deplot]
+        Text --> result1(result1.json)
+		    Table --> result1
+		    Chart --> result1
     end
     
-    result1 --🔍키워드--> 🎯KeyBERT
-    result1 --🧐핵심 문장--> 🏆KoBERT
+    result1 --키워드--> KeyBERT
+    result1 --핵심 문장--> KoBERT
 
     subgraph NLP_Processing
-        KeyBERT --> 📂result2(result2.json)
-        KoBERT --> 📂result2
+        KeyBERT --> result2(result2.json)
+        KoBERT --> result2
     end
 
     subgraph Question_Generation
-        result2 --✍빈칸<br>{context, answer}--> 🤖GQ1[KoBART]
-        result2 --📝주관식--> 🤖GQ2[KOBART + 문장유사도검사]
-        result2 --✅O/X--> 🤖GQ3[KeyWord 추출]
-        GQ1 --> 🎯result3
-        GQ2 --> 🎯result3
-        GQ3 --> 🎯result3
+        result2 --빈칸<br>{context, answer}--> GQ1[KoBART]
+        result2 --주관식--> GQ2[KOBART + 문장유사도검사]
+        result2 --O/X--> GQ3[KeyWord 추출]
+        GQ1 --> result3
+        GQ2 --> result3
+        GQ3 --> result3
     end
-
-
 ### 🧩 역할: 주관식 문제 생성 모델 개발
 #### 🏗 모델 기반 질문 생성
 	🎯 문장 유사도를 활용한 질문 품질 개선
