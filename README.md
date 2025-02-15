@@ -17,9 +17,6 @@
 
 🏗 시스템 아키텍처 (System Architecture)
 
-graph TD
-    Input(학습자료.pdf)--레이아웃 및 텍스트 추출--> YOLO[DocLayout-YOLO]
-    
     subgraph Layout_Analysis
         YOLO--일반 텍스트--> Text[EasyOCR]
         YOLO--표--> Table[성능 개선 시도 중]
