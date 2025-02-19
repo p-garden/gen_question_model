@@ -22,7 +22,7 @@ graph TD
     
     subgraph Layout_Analysis
         YOLO--일반 텍스트--> Text[EasyOCR]
-        YOLO--표--> Table[성능 개선 시도 중]
+        YOLO--표--> Table[Canny Edge Detection, HoughLinesP]
         YOLO--차트--> Chart[kor_deplot]
         Text --> result1(result1.json)
         Table --> result1
@@ -38,12 +38,14 @@ graph TD
     end
 
     subgraph Question_Generation
-        result2 --빈칸<br>{context, answer}--> GQ1[KoBART]
-        result2 --주관식--> GQ2[KoBART]
-        result2 --O/X--> GQ3[???]
+        result2 --주관식--> GQ1[KoBART]
+        result2 --O/X--> GQ2[KoBART]
+        result2 --빈칸--> GQ3[키워드 기반]
+        result2 --서술형--> GQ4[키워드 기반]
         GQ1 --> result3
         GQ2 --> result3
         GQ3 --> result3
+        GQ4 --> result3
     end
 ```
 ### 🧩 역할: 주관식 문제 생성 모델 개발
