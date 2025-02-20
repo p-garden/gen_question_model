@@ -78,3 +78,6 @@ graph TD
 ##### 💡 예시 (문장 유사도 활용)
 	정답 질문: "대한민국의 수도는 어디인가?"
 	모델이 생성한 질문: "한국의 수도는 무엇인가?"
+
+https://huggingface.co/PG18/Generate_shortanswer_question
+https://huggingface.co/asteroidddd/kobart-oxquiz
