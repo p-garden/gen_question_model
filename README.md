@@ -79,5 +79,8 @@ graph TD
 	정답 질문: "대한민국의 수도는 어디인가?"
 	모델이 생성한 질문: "한국의 수도는 무엇인가?"
 
-https://huggingface.co/PG18/Generate_shortanswer_question
+### 제작 모델 링크
+주관식 문제  
+https://huggingface.co/PG18/Generate_shortanswer_question  
+OX문제  
 https://huggingface.co/asteroidddd/kobart-oxquiz
