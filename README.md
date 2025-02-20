@@ -1,5 +1,14 @@
 # 🏆비타민 겨울방학 프로젝트
 ## 📌 주제: 학습자료를 바탕으로 문제 생성 모델
+
+## 회고 
+https://velog.io/@j2982477/%EC%A1%B1%EB%B3%B4-%EC%83%9D%EC%84%B1%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0  
+제작 모델  
+	주관식 문제  
+	https://huggingface.co/PG18/Generate_shortanswer_question  
+	OX문제  
+	https://huggingface.co/asteroidddd/kobart-oxquiz
+
 ### ⚙️ 프로세스 (Processing Flow)
 #### 📝 1. 이미지 처리 (PDF 학습자료 OCR 변환)
 	📂 입력: PDF 학습자료
@@ -79,8 +88,3 @@ graph TD
 	정답 질문: "대한민국의 수도는 어디인가?"
 	모델이 생성한 질문: "한국의 수도는 무엇인가?"
 
-### 제작 모델 링크
-주관식 문제  
-https://huggingface.co/PG18/Generate_shortanswer_question  
-OX문제  
-https://huggingface.co/asteroidddd/kobart-oxquiz
