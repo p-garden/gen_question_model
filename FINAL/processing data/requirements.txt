@@ -1,0 +1,15 @@
+numpy
+pandas
+opencv-python
+pillow
+easyocr
+pdf2image
+huggingface_hub
+ultralytics
+doclayout_yolo
+transformers
+sentence_transformers
+keybert
+konlpy
+kss
+symspellpy
